@@ -1040,10 +1040,14 @@ BPI Abstraction Layers MUST support Operational Monitoring of an API system.
 
 *In the context of this document, an operational monitoring system of BPI APIs refers to the practice of monitoring APIs, most commonly in production, to gain visibility into performance, availability, and functional correctness. These types of systems are designed to help a BPI operator analyze the performance of BPI applications and improve performance. Examples are measurements of how long a service takes to execute, how often it is called, where it is called from, and how much of the total time is spent executing the service.*
 
+#### **[R54]	Testability:** Operational monitoring of an API system is always implmementable within or in tandem to an abstraction layer containing an API system.
+
 #### **[R55]**	
 BPI Abstraction Layers MUST support an API Portal for provisioning.
 
 *A BPI API portal in the context of this document is defined as a visual or a programmatic presentation that provides information about an API at every stage of its lifecycle. A BPI API portal allows operators to expose, document, provision access, and otherwise enable their APIs, and users of those APIs to register applications, reset credentials,  provide API feedback, report bugs, etc. A non-normative example of a minimal set of functionalities can be found here [[API Portal Functionality](#api-portal)]*
+
+#### **[R55]	Testability:** An API portal is always implementable in tandem to an abstraction layer containing an API system. 
 
 #### **[R56]**	
 BPI Abstraction Layers MUST support an API Gateway that does not have Material Impact on BPI latency. 
@@ -1052,37 +1056,55 @@ BPI Abstraction Layers MUST support an API Gateway that does not have Material I
 
 *In the context of this document, Material Impact refers to something that causes the underlying business requirements of the BPI not to be met. For example in some deployment situations, a 5-second delay can cause transactions to fail or introduce instability to the system, while in other circumstances a 5-minute delay in processing makes no difference to the system as a whole.*
 
+#### **[R56]	Testability:** An API Gateway without material latency impact is always implementable within or in tandem to an abstraction layer containing an API system. 
+
 #### **[D17]**	
 BPI Abstraction Layers SHOULD support Virtualized APIs.
 
 *In the context of this document, virtualized APIs are defined as a production sandbox for continuous integration testing and continuous deployment of APIs.*
+
+#### **[D17]	Testability:** An API system within an abstraction layer is always virtualizable. 
 
 #### **[D18]**	
 A BPI Abstraction Layer SHOULD support a content delivery network (CDN) (not applicable for a CCSM Abstraction Layer).
 
 *In the context of a BPI, a content delivery network is a geographically distributed proxy server network providing high availability and delivery performance of content such as large data files or video streams.*
 
+#### **[D18]	Testability:** A content delivery netork can always supplement an abstraction layer containing an API system capable of serving data. 
+
 #### **[CR13]>[D18]** 
 A CDN utilized in a BPI Abstraction Layer and operated by a 3rd party MUST support BPI subject-specific and time-based content access control. 
 
+#### **[CR13]>[D18]	Testability:** A content delivery network can be chosen or constructed based on its satisfaction of subject-specific and time-based content access control. 
+
 #### **[CR14]>[D18]** 
 A CDN utilized in a BPI Abstraction Layer and operated by a 3rd party MUST support time-based, automated content removal.
+
+#### **[CR14]>[D18]	Testability:** A content delivery network can be chosen or constructed based on its satisfaction of time-based, automated content removal.
 
 #### **[R57]**	
 BPI Abstraction Layers MUST support integration with internal, as defined in section [5  Middleware, Communication and Interoperability](#5-middleware-communication-and-interoperability), and/or external BPI Subject identity access management (IAM) or identity provider (IdP) systems. 
 
 *See Figure 4 as to the meaning of an IdP in a BPI context, and Figure 5 in this document as to the meaning of external IAM and its interplay with BPI IAM discussed in section [5  Middleware, Communication and Interoperability](#5-middleware-communication-and-interoperability).*
 
+#### **[R57]	Testability:** 
+
 #### **[R58]**	
 BPI Abstraction Layers MUST support API delivery utilizing the service orchestration capabilities of the BPI Middleware Layer defined in section [5  Middleware, Communication and Interoperability](#5-middleware-communication-and-interoperability).
 
+#### **[R58]	Testability:** The service orchestration capabilities of the BPI middleware layer defined in section [5  Middleware, Communication and Interoperability](#5-middleware-communication-and-interoperability) are testable, therefore an abstraction layer's delivery of APIs using such an orchestration system is testable. 
+
 #### **[R59]**	
 BPI Abstraction Layers MUST support facilitating the discovery and negotiation of capabilities and subsequent integration between a BPI and Legacy Systems/other BPIs as defined in section [5  Middleware, Communication and Interoperability](#5-middleware-communication-and-interoperability) (for BPI Abstraction Layer only).
+
+#### **[R59]	Testability:** The discovery and negotiation of capabilities and subsequent integration between a BPI and Legacy Systems/other BPIs as defined in section [5  Middleware, Communication and Interoperability](#5-middleware-communication-and-interoperability) are testable, therefore an abstraction layer's use of such capabilities and subsequent integration is  testable.
 
 #### **[R60]**	
 BPI Abstraction Layers MUST support the integration of CCSM specific transaction interfaces, transaction crafting, and CCSM specific smart contract management. 
 
 *Smart Contract management comprises full lifecycle management from testing, initial deployment, updates, and deactivation (for CCSM Abstraction Layer only).*
+
+#### **[R60]	Testability:** CCSM specific transactions interfaces, transaction crafting and CCSM specific smart contract management is awlays implementable within an abstraction layer given the chosen CCSM adheres to all requirements within [Baseline CCSM Specification](https://github.com/eea-oasis/baseline-standard/blob/main/ccsm/baseline-ccsm-v1.0-psd01.md). 
 
 Figure 6 below shows the reference architecture for a BPI or CCSM Abstraction Layer. 
 
@@ -1104,6 +1126,9 @@ The security requirements of this section are distinct from the security require
 Abstraction Layers utilized in a BPI MUST be compatible with widely used external authentication services. 
 
 *Non-normative examples of such authentication technologies are OAUTH [[OAuth-2.0](#oauth-20)] , SAML [[SAML](#saml)] , OIDC [[OIDC](#oidc)], AD/LDAP [[ActiveDirectory](#activedirectory)].*
+
+#### **[]	Testability:**
+
 #### **[R62]**	
 Abstraction Layers utilized in a BPI MUST support roles & access management.
 
@@ -1116,25 +1141,35 @@ The most common access management approaches are:
 - Access Control List (ACL) tying access rights to a table listing the permissions attached to computing resources
 - Attribute Based Access Control (ABAC) tying access rights to an evaluation of a set of rules and policies to manage access rights according to specific attributes, such as environmental, system, object, or user information
 
+#### **[]	Testability:**
+
 #### **[R63]**	
 Abstraction Layers utilized in a BPI MUST support security policy management.
 
 Security policy is defined as a statement of required protection for (a set of) information objects [[NIST SP 800-192](#-NIST-SP-800-192)]. An example of a security policy is that only workgroup participants can initiate a workstep within a workflow that is associated with the workgroup.
+
+#### **[]	Testability:**
 
 #### **[R64]**	
 Abstraction Layers utilized in a BPI MUST support Single-Sign-On (SSO). 
 
 *See [[SSO](#sso)] also for the recommendations of the National Institute of Standards and Technology (NIST Guide to Secure Web Services).*
 
+#### **[]	Testability:**
+
 #### **[R65]**	
 Abstraction Layers utilized in a BPI MUST support multi-factor authentication.
 
 *See the link here for the NIST definition adopted in this document [MFA](https://csrc.nist.gov/glossary/term/mfa).*
 
+#### **[]	Testability:**
+
 #### **[R66]**	
 Abstraction Layers utilized in a BPI MUST support hardware security modules (HSM)
 
 *This document adopts the [NIST definition](https://csrc.nist.gov/glossary/term/hardware_security_module_hsm) and for further information, refer to [[HSM](#hsm)].*
+
+#### **[]	Testability:**
 
 -------
 
