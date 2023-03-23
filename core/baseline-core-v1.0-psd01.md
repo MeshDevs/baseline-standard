@@ -792,21 +792,21 @@ where associated data refers to data describing the characteristics of the ident
 This approach requires a decentralized, or at least strongly federated, infrastructure as expressed in the requirements below. 
 
 #### **[D10]**	
-The Public Key Infrastructure (PKI) of a BPI SHOULD have no single point of failure, and SHOULD NOT require pre-existing trust relationships between participants.*
+The Public Key Infrastructure (PKI) of a BPI SHOULD have no single point of failure, and SHOULD NOT require pre-existing trust relationships between participants.
 
-[[d10]](#d10) Testability: The PKI used within a BPI does not have trusted third party identity providers that are capable of being compromised. 
+[[d10]](#d10) Testability: Decentralized Identifiers are a commonly used PKI that are decentralized and without a single point of failure. The [W3C DID Standard](https://www.w3.org/TR/did-core/#methods) outlines detailed descriptions of expected behavior, requirements, and conformance criteria that implementations must meet. This illustates that the presence of a single point of failure in a PKI is testable. 
 
 #### **[R33]**	
 The PKI of a BPI MUST be strongly federated.
 
 *Strongly federated in this context means that there is a known, finite number of participants, without a single point of failure in the PKI. However, collusion of a limited number of participants in the federated infrastructure may still lead to a compromised PKI. The consensus thresholds required for a change in the infrastructure are out of scope for this document.*
 
-[[R33]](#r33) Testability: Many counterparties govern the PKI, such as the [Sovrin Foundation](https://sovrin.org/).
+[[R33]](#r33) Testability: An example of a strongly federated PKI is the [Sovrin Foundation](https://sovrin.org/), which implements PKI without a single point of failure by use of a trust framework which is built on top of open standards such as the [W3C DID Standard](https://www.w3.org/TR/did-core/#methods). Validation of a sufficiently decentralized federated PKI is an extension of [[D10]](#d10), and therefore, this requirement is testable. 
 
 #### **[R34]**	
 The identifiers and identity utilized in a BPI MUST be controlled by its Principal Owner.
 
-[[R34]](#r34) Testability: The identifier used for a BPI user must be controlled by a public-private key pair, where the private key is controlled by the BPI user who is the Principal Owner of the identifier. The identifier of the Principal Owner is digitally signed with this private key to prove control. 
+[[R34]](#r34) Testability: Decentralized Identifiers are a commonly used tool which give Principal Owners control over a private-public key pair, and therefore, their identifiers and identity. The [W3C DID Standard](https://www.w3.org/TR/did-core/#methods) outlines detailed descriptions of expected behavior, requirements, and conformance criteria that implementations must meet. This illustates that control over identifiers and identity within a BPI is testable.
 
 *For a BPI to properly operate, communication must be trusted and secure. Communications are secured through the safe delivery of public keys tied to identities. The Principal Owner of the identity uses a corresponding secret private key to both decrypt messages sent to them, and to prove they sent a message by signing it with its private key.*
 
@@ -825,21 +825,21 @@ The identifiers and identity utilized in a BPI MUST be controlled by its Princip
 #### **[D11]** 
 A BPI SHOULD utilize a DPKI.
 
-[[D11]](#d11) Testability: A Decentralized Public Key Infrastructure can be implemented, for example, on a CCSM such as Ethereum to act as the decentralized key-value storage. Specific examples of DPKI are DID methods anchored to a public blockchain such as ["did:ethr"](https://github.com/decentralized-identity/ethr-did-resolver/blob/master/doc/did-method-spec.md) or ["did:ion"](https://github.com/decentralized-identity/ion). Specific DID methods can be found in the [DID specification registry](https://www.w3.org/TR/did-spec-registries/).
+[[D11]](#d11) Testability: DPKI is implementable in the form of DID methods anchored to a public blockchain such as ["did:ethr"](https://github.com/decentralized-identity/ethr-did-resolver/blob/master/doc/did-method-spec.md). did:ethr adheres to the general testing requirements for DIDs based on the [W3C DID Standard](https://www.w3.org/TR/did-core/#methods), and is therefore testable.
 
 #### **[CR1]>[D11]**	
 Any Principal Owner in a DPKI system utilized by a BPI MUST be able to broadcast a message if it is well-formed within the context of the DPKI.
 
 *Other peers in the system do not require admission control. This implies a decentralized consensus mechanism naturally leading to the utilization of systems such as CCSMs.*
 
-[[CR1]>[D11]](#cr1>d11) Testability: DID methods that have a message protocol conformant to the [W3C DID Standard](https://www.w3.org/TR/did-core/#methods) can be used to broadcast messaged within a DPKI system. A DID method must have the capacity to send Create, Read, Update, and Delete messages. An example of a did method that meets such requirements is ["did:ethr"](https://github.com/decentralized-identity/ethr-did-resolver/blob/master/doc/did-method-spec.md).
+[[CR1]>[D11]](#cr1>d11) Testability: Message broadcasting through a DPKI system is implementable through DID method message protocols. Such message protocols are conformant to the [W3C DID Standard](https://www.w3.org/TR/did-core/#methods) which allow Create, Read, Update, and Delete message, which are therefore testable. 
 
 #### **[CR2]>[D11]**	
 Given two or more histories of DPKI updates, any Principal Owner within a BPI MUST be able to determine which one is preferred due to security by inspection.
 
 *This implies the existence of a method of ascertaining the level of resources backing a DPKI history such as the hash power in Bitcoin based on difficulty level and nonce.*
 
-[[CR2]>[D11]](#cr2>d11) Testability: Verification to determine that a set of keys associated with a DID in a DPKI is the valid and latest set of keys can be achieved by:
+[[CR2]>[D11]](#cr2>d11) Testability: Verification of of Principal Owner's latest set of keys is testable through:
 1. Using a universal resolver to get the latest set of keys associated with the DID used in a BPI
 2. Extracting the block and transaction hash of the latest update on the CCSM used by the DID method from the metadata of the universal resolver.
 3. Verifying if the latest set of keys are in the longest chain using a block explorer such as [Etherscan](https://etherscan.io/).
@@ -849,24 +849,24 @@ Given two or more histories of DPKI updates, any Principal Owner within a BPI MU
 #### **[CR3]>[D11]**	
 Private keys utilized in a BPI MUST be generated in a manner that ensures they remain under the Principal Owner’s control. 
 
-[[CR3]>[D11]](#cr3>d11) Testability: To ensure the Principal Owner is solely reponsible for the creation and use the set of public/private keys associated with their DID, a non-custodial wallet must be used to initiate all transactions on behalf of that principal owner within a BPI. An example of implementing this would be to integrate this non-custodial wallet with the BPI APIs that ensure all API payloads/messages are signed, and therefore authorized, solely by the Principal Owner's private key before executing BPI transactions.
+[[CR3]>[D11]](#cr3>d11) Testability: A common tool which ensures control over generation and possesion of cryptographic keys is a non-custodial wallet. Sufficient contol over private keys is implementatble in a BPI with a non-custodial wallet that is integrated with BPI API's that ensure all API payloads/messages are signed, and therefore authorized, solely by the Principal Owner's private key before executing BPI transactions. Initiation of transactions which are signed using the private keys held in a wallet is considered sufficiently secure for Ethereum, and therefore, sufficiently secure for a BPI. The [Ethereum Yellow Paper](https://ethereum.github.io/yellowpaper/paper.pdf) decribes requirements for secure transaction initiation, which is therefore testable in the context of a BPI. 
 
 #### **[CR4]>[D11]** 
 Generating key pairs in a BPI on behalf of the Principal Owner MUST NOT be allowed.
 
-[[CR4]>[D11]](#cr4>d11) Testability: An example of cutting off the ability to generate public/private key pairs for a subject is by ensuring there are no custodial wallets that exist within a BPI.
+[[CR4]>[D11]](#cr4>d11) Testability: A common tool which ensures sole ability of the Principal Owner to general their own keys is a non-custodial wallet. Several standards such as [BIP-32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki), [BIP-39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki), and [BIP-44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) define standards for Hierarchical Deterministic wallets, mneumonic phrases for wallet backups, and multi-currency, multi-account wallet structures. These standards illustrate proper generation, use, and management of keys on behalf of the principal owner alone, and is therefore testable. 
 
 #### **[CR5]>[D11]**	
 Principal Owners in a BPI MUST always be in control of their identifiers and the corresponding public keys. 
 
-[[CR5]>[D11]](#cr5>d11) Testability: To guarantee Principal Owners are the sole controller over their identifiers and related public keys, validation can be conducted in the same manner as [[CR2]>[D11]](#cr2>d11). 
+[[CR5]>[D11]](#cr5>d11) Testability: Control over identifiers and the corresponding keys is can be validated in the same way as [[CR2]>[D11]](#cr2>d11) and is therefore testable. 
 
 #### **[O1]**	
 Principal Owners MAY extend control of their identifier to third parties.
 
 *For example for recovery purposes.*
 
-[[O1]](#o1) Testability: An implementer can verify whether a principal owner has delegated authority of their identifier to third parties by checking in the DID document if there are other DIDs in the [controller](https://www.w3.org/TR/did-core/#did-controller) section of the did document and what type of control these identifiers have by checking the [verification relationships](https://www.w3.org/TR/did-core/#verification-relationships) such as authentication or signing on behalf of [assertion](https://www.w3.org/TR/did-core/#assertion) in the DID document.
+[[O1]](#o1) Testability: Within a DPKI, delegation of authority of a Principal Owner's identifier to a third party is implementable through adding other DIDs in the [controller](https://www.w3.org/TR/did-core/#did-controller) section of the did document and what modifying the control these identifiers have represented as [verification relationships](https://www.w3.org/TR/did-core/#verification-relationships) such as authentication or signing on behalf of [assertion](https://www.w3.org/TR/did-core/#assertion) in the DID document. As DID's are implemented via the [W3C DID Standard](https://www.w3.org/TR/did-core/#methods), this requirement is testable.
 
 #### **[CR6]<[O1]** 
 Extension of control of identifiers to 3rd parties in a BPI MUST be an explicit, informed decision by the Principal Owner of such identifiers.
